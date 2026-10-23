@@ -6,7 +6,8 @@
 #define DSA_P2_GROUP_25_TEST_H
 
 
-class test {
+class tree {
+
 };
 
 
