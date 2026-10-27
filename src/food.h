@@ -11,6 +11,7 @@ class Food {
     float nutrientAmount;
 
 public:
+    Food();
     Food(std::string foodCat, std::string foodDesc, std::string foodNutrName, float foodNutrAmt);
 };
 
