@@ -13,6 +13,7 @@ class Food {
 public:
     Food();
     Food(std::string foodCat, std::string foodDesc, std::string foodNutrName, float foodNutrAmt);
+    float getNutrientAmount();
 };
 
 

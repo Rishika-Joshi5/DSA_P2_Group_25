@@ -3,11 +3,11 @@
 #include <iostream>
 using namespace std;
 
-void Tree::insert(int nutrientVal) {
+void Tree::insert(float nutrientVal) {
     this->root = insertHelper(root, nutrientVal);
 }
 
-Node* Tree::insertHelper(Node* current, int nutrientVal) {
+Node* Tree::insertHelper(Node* current, float nutrientVal) {
     if (current == nullptr) {
         return new Node (nutrientVal);
     }
@@ -19,5 +19,11 @@ Node* Tree::insertHelper(Node* current, int nutrientVal) {
     }
     else {
         cout << "could not insert" << endl;
+    }
+}
+
+void Tree::buildTreeHelper(string nutrientName, vector<Food> foods) {
+    for (Food f : foods) {
+        insert(f.getNutrientAmount());
     }
 }

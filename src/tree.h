@@ -1,14 +1,16 @@
 #ifndef DSA_P2_GROUP_25_TEST_H
 #define DSA_P2_GROUP_25_TEST_H
+#include "food.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 struct Node {
-    int nutrientValue;
+    float nutrientValue;
     Node* left;
     Node* right;
 
-    Node(int nutrientValue) {
+    Node(float nutrientValue) {
         this->nutrientValue = nutrientValue;
         this->left = nullptr;
         this->right = nullptr;
@@ -18,13 +20,14 @@ struct Node {
 class Tree {
     string nutrient;
     Node* root;
-    Node* insertHelper(Node* current, int nutrientVal);
+    Node* insertHelper(Node* current, float nutrientVal);
+    void buildTreeHelper(string nutrientName, vector<Food> foods);
 public:
     Tree(string nutrient) {
         this->nutrient = nutrient;
         this->root = nullptr;
     }
-    void insert(int nutrientVal);
+    void insert(float nutrientVal);
 };
 
 
