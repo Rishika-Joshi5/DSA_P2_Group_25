@@ -17,3 +17,7 @@ Food::Food(string foodCat, string foodDesc, string foodNutrName, float foodNutrA
 float Food::getNutrientAmount() {
     return nutrientAmount;
 }
+
+string Food::getDescription() {
+    return description;
+}

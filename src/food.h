@@ -1,7 +1,7 @@
 #ifndef DSA_P2_GROUP_25_FOOD_H
 #define DSA_P2_GROUP_25_FOOD_H
 #include <string>
-
+using namespace std;
 //food class. if we feel like it, we could make it part of the tree file or keep it like this
 
 class Food {
@@ -14,6 +14,7 @@ public:
     Food();
     Food(std::string foodCat, std::string foodDesc, std::string foodNutrName, float foodNutrAmt);
     float getNutrientAmount();
+    string getDescription();
 };
 
 

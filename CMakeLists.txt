@@ -8,4 +8,5 @@ include_directories(src)
 add_executable(DSA_P2_Group_25
         src/main.cpp
         src/tree.cpp
-        src/tree.h)
+        src/tree.h
+        src/food.cpp)

@@ -3,27 +3,28 @@
 #include <iostream>
 using namespace std;
 
-void Tree::insert(float nutrientVal) {
-    this->root = insertHelper(root, nutrientVal);
+void Tree::insert(Food insertFood) {
+    //insert Node into tree when Node constructor takes in a food item
+    this->root = insertHelper(root, insertFood);
 }
 
-Node* Tree::insertHelper(Node* current, float nutrientVal) {
+Node* Tree::insertHelper(Node* current, Food insertFood) {
     if (current == nullptr) {
-        return new Node (nutrientVal);
+        return new Node (insertFood);
     }
-    else if (nutrientVal < current->nutrientValue) {
-        current->left = insertHelper(current->left, nutrientVal);
+    if (insertFood.getNutrientAmount() < current->foodItem.getNutrientAmount()) {
+        current->left = insertHelper(current->left, insertFood);
     }
-    else if (nutrientVal > current->nutrientValue) {
-        current->right = insertHelper(current->right, nutrientVal);
+    else if (insertFood.getNutrientAmount() > current->foodItem.getNutrientAmount()) {
+        current->right = insertHelper(current->right, insertFood);
     }
     else {
-        cout << "could not insert" << endl;
+        cout << "could not insert node into tree" << endl;
     }
 }
 
 void Tree::buildTreeHelper(string nutrientName, vector<Food> foods) {
     for (Food f : foods) {
-        insert(f.getNutrientAmount());
+        insert(f);
     }
 }
