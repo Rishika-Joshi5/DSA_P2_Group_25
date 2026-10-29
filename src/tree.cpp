@@ -24,7 +24,18 @@ Node* Tree::insertHelper(Node* current, Food insertFood) {
 }
 
 void Tree::buildTreeHelper(string nutrientName, vector<Food> foods) {
+    //may not need to take in nutrientName
     for (Food f : foods) {
         insert(f);
     }
+}
+
+//inorder traversal, printing on the go
+void Tree::DFS(Node* current) {
+    if (current == nullptr) {
+        return;
+    }
+    DFS(current->left);
+    cout << current->foodItem.getNutrientAmount() << endl;
+    DFS(current->right);
 }

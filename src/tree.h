@@ -19,6 +19,7 @@ struct Node {
 };
 
 class Tree {
+    //may not need nutrient variable
     string nutrient;
     Node* root;
     Node* insertHelper(Node* current, Food foodItem);
@@ -30,6 +31,7 @@ public:
     }
     void insert(Food insertFood);
     void buildTreeHelper(string nutrientName, vector<Food> foods);
+    void DFS(Node* current);
 };
 
 
