@@ -1,6 +1,4 @@
-#include "Food.h"
-#include <string>
-#include <vector>
+#include "reader.h"
 #include <fstream>
 #include <iostream>
 
@@ -43,7 +41,7 @@ float findDifference(Food food1, Food food2) {
 //helper function to find where specific food item is in food vector
 int findIndex(std::vector<Food>& foods, Food target) {
     for (int i=0; i<foods.size(); i++) {
-        if (foods[i] == target) {
+        if (foods[i].getDescription() == target.getDescription()) {
             return i;
         }
     }
@@ -114,6 +112,7 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
     //read line with all the keys
     //get the index of category, description, and the nutrient type based on Data.[nutrName]
     //make nutrientName of all food objects the same as nutrName passed to function
+    std::getline(foodFile, line);
     std::vector<std::string> headers = parseLine(line);
     for (int i=0; i<headers.size(); i++) {
         if (headers[i] == dataNutrName) {
