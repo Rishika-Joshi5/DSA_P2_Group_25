@@ -30,14 +30,24 @@ Food findNutrientMin(std::vector<Food>& foods) {
     return foods[index];
 }
 
-//helper function to get difference of food item nutrient amount
-float getDifference(Food food1, Food food2) {
+//helper function to get difference of food item nutrient amounts
+float findDifference(Food food1, Food food2) {
     float difference = food1.getNutrientAmount() - food2.getNutrientAmount();
     //want difference to be positive, so checking if negative and converting
     if (difference < 0) {
         difference = difference * -1;
     }
     return difference;
+}
+
+//helper function to find where specific food item is in food vector
+int findIndex(std::vector<Food>& foods, Food target) {
+    for (int i=0; i<foods.size(); i++) {
+        if (foods[i] == target) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 
@@ -84,9 +94,8 @@ std::vector<std::string> parseLine(const std::string& line) {
 
 //THIS IS FAR FROM DONE BTW
 std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmount) {
-    Food placeholder; //placeholder food object to exist at the root until root is read and inserted
     std::string dataNutrName = "Data." + nutrName; //makes nutrName be Data.[nutrName] to compare later on.
-    std::vector<Food> foods = {placeholder}; //what will be returned
+    std::vector<Food> foods = {}; //what will be returned
     int vectorTotalAmount = altAmount + 1;
     int vectorCurrAmount = 1;
     int nutrientIndex = -1;
@@ -119,8 +128,25 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
         return {};
     }
 
+    //FIRST we NEED to get the root.
+    //we need it there so that we can compare it to future items incase it's very far down
+    while (std::getline(foodFile, line)) {
+        std::vector<std::string> currFoodStats = parseLine(line);
+        if (currFoodStats[0] == foodCat) {
+            Food root(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]));
+            foods.push_back(root);
+            break;
+        }
+    }
 
-    //NOT FUNCTIONAL YET
+    //resetting reader pointer
+    foodFile.clear();
+    foodFile.seekg(0, std::ios::beg);
+
+    std::string dummy;
+    std::getline(foodFile, dummy); //to skip headers
+
+    //reading over to make list for tree implementation
     while (std::getline(foodFile, line)) {
         //go line by line, getting stats for current food item
         std::vector<std::string> currFoodStats = parseLine(line);
@@ -135,26 +161,43 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
 
         //adding to foods vector
 
-        //checking if root, adding to first index!
+        //checking if root, ignore
         if (currFood.getCategory() == foodCat) {
-            foods.front() = currFood;
+            continue;
         }
-        //checking if vector ISN'T FULL, insert regularly
+        //checking if vector ISN'T FULL, insert regularly and increment vectorCurrAmount
         else if (vectorCurrAmount < vectorTotalAmount) {
             foods.push_back(currFood);
+            vectorCurrAmount++;
         }
-        //vector is full, replacing furthest items
+        //vector is full, replacing furthest items from root
         else {
+            //first check if same/higher than root (MAX SCENARIO)
+            if (currFood.getNutrientAmount() >= foods[0].getNutrientAmount()) {
+                //if curr is closer to root than max, replace
+                int maxIndex = findIndex(foods, findNutrientMax(foods));
+                if (findDifference(foods[0], currFood) < findDifference(foods[0], foods[maxIndex])) {
+                    foods.erase(foods.begin() + maxIndex);
+                    foods.push_back(currFood);
+                }
+            }
+            //less than root amount (MIN SCENARIO)
+            else {
+                //if curr is closer to root than min, replace
+                int minIndex = findIndex(foods, findNutrientMin(foods));
+                if (findDifference(foods[0], currFood) < findDifference(foods[0], foods[minIndex])) {
+                    foods.erase(foods.begin() + minIndex);
+                    foods.push_back(currFood);
+                }
+            }
 
         }
-
-
     }
 
 
     //close file
     foodFile.close();
 
-    //return vector of food objects
+    //return vector of food objects with nutrName nutrients, of altAmount amount
     return foods;
 }
