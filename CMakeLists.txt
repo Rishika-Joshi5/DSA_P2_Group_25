@@ -9,4 +9,7 @@ add_executable(DSA_P2_Group_25
         src/main.cpp
         src/tree.cpp
         src/tree.h
-        src/food.cpp)
+        src/food.h
+        src/food.cpp
+        src/reader.h
+        src/reader.cpp)
