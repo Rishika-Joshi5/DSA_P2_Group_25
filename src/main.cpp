@@ -6,6 +6,7 @@ using namespace std;
 
 int main() {
     //DEBUGGING READER.CPP!!!!
+    //run DSA_P2_Group_25 instead of main.cpp for this
 
     //cat: Milk, nutr: Protein, amt: 10
     vector<Food> testVec1 = readFile("Milk", "Protein", 10);
