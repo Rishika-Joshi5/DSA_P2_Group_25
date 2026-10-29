@@ -14,10 +14,18 @@ Food::Food(string foodCat, string foodDesc, string foodNutrName, float foodNutrA
     nutrientAmount = foodNutrAmt;
 }
 
-float Food::getNutrientAmount() {
-    return nutrientAmount;
+string Food::getCategory() {
+    return category;
 }
 
 string Food::getDescription() {
     return description;
+}
+
+string Food::getNutrientName() {
+    return nutrientName;
+}
+
+float Food::getNutrientAmount() {
+    return nutrientAmount;
 }
