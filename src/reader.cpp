@@ -4,11 +4,48 @@
 #include <fstream>
 #include <iostream>
 
+//helper function to get max food object in certain nutrient amount
+Food findNutrientMax(std::vector<Food>& foods) {
+    int index = -1;
+    float maxAmount = -1;
+    for (int i=0; i<foods.size(); i++) {
+        if (foods[i].getNutrientAmount() > maxAmount) {
+            index = i;
+            maxAmount = foods[i].getNutrientAmount();
+        }
+    }
+    return foods[index];
+}
+
+//helper function to get min food object in certain nutrient amount
+Food findNutrientMin(std::vector<Food>& foods) {
+    int index = -1;
+    float minAmount = 100000.0; //placeholder value
+    for (int i=0; i<foods.size(); i++) {
+        if (foods[i].getNutrientAmount() < minAmount) {
+            index = i;
+            minAmount = foods[i].getNutrientAmount();
+        }
+    }
+    return foods[index];
+}
+
+//helper function to get difference of food item nutrient amount
+float getDifference(Food food1, Food food2) {
+    float difference = food1.getNutrientAmount() - food2.getNutrientAmount();
+    //want difference to be positive, so checking if negative and converting
+    if (difference < 0) {
+        difference = difference * -1;
+    }
+    return difference;
+}
+
+
 //helper function to help with indexing
 //pass the read line and transforms it into an array
-vector<std::string> parseLine(const string& line) {
-    vector<std::string> fields;
-    string specificField;
+std::vector<std::string> parseLine(const std::string& line) {
+    std::vector<std::string> fields;
+    std::string specificField;
     bool inQuotes = false;
     for (size_t i=0; i<line.length(); i++) {
         char c = line[i];
@@ -46,18 +83,12 @@ vector<std::string> parseLine(const string& line) {
 //if returns an empty array, error has occured.
 
 //THIS IS FAR FROM DONE BTW
-std::vector<Food> readFile(std::string foodCat, std::string nutrName) {
-    //make placeholder food object to exist at the root until root is read and inserted
-    //make a new variable that makes nutrName be Data.[nutrName] to compare later on.
-    //DO NOT CHANGE NUTRNAME, YOU WILL NEED IT FOR LATER
-    //also make food vector
-    Food placeholder;
-    Food lowestVal;
-    Food highestVal;
-    std::string dataNutrName = "Data." + nutrName;
-    std::vector<Food> foods = {placeholder};
-    int categoryIndex = 0;
-    int descriptionIndex = 1;
+std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmount) {
+    Food placeholder; //placeholder food object to exist at the root until root is read and inserted
+    std::string dataNutrName = "Data." + nutrName; //makes nutrName be Data.[nutrName] to compare later on.
+    std::vector<Food> foods = {placeholder}; //what will be returned
+    int vectorTotalAmount = altAmount + 1;
+    int vectorCurrAmount = 1;
     int nutrientIndex = -1;
 
     //open file
@@ -91,11 +122,31 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName) {
 
     //NOT FUNCTIONAL YET
     while (std::getline(foodFile, line)) {
-        //go line by line, getting the category and description first
-        //if the new object category is the same as the foodCat passed to the funct, make food obj index 0
-        //if there is a root already and the categories are the same, skip
-        //if the category is the same as the object most recently pushed into the vector, do not add to vector
-        //else, create a new food object with category, description, nutrName, and the actual data of that nutrient
+        //go line by line, getting stats for current food item
+        std::vector<std::string> currFoodStats = parseLine(line);
+        Food currFood(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]));
+
+        //check if categories are the same. if is, move to next line
+        for (int i=0; i<foods.size(); i++) {
+            if (currFood.getCategory() == foods[i].getCategory()) {
+                continue;
+            }
+        }
+
+        //adding to foods vector
+
+        //checking if root, adding to first index!
+        if (currFood.getCategory() == foodCat) {
+            foods.front() = currFood;
+        }
+        //checking if vector ISN'T FULL, insert regularly
+        else if (vectorCurrAmount < vectorTotalAmount) {
+            foods.push_back(currFood);
+        }
+        //vector is full, replacing furthest items
+        else {
+
+        }
 
 
     }
