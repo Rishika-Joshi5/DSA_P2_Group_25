@@ -39,3 +39,19 @@ void Tree::DFS(Node* current) {
     cout << current->foodItem.getNutrientAmount() << endl;
     DFS(current->right);
 }
+
+Node* Tree::removeNode(Node* current) {
+    current->left = nullptr;
+    current->right = nullptr;
+    delete current;
+    current = nullptr;
+}
+
+void Tree::postorderDeletion(Node* current) {
+    if (current == nullptr) {
+        return;
+    }
+    postorderDeletion(current->left);
+    postorderDeletion(current->right);
+    removeNode(current);
+}

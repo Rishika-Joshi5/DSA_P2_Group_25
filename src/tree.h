@@ -23,6 +23,7 @@ class Tree {
     string nutrient;
     Node* root;
     Node* insertHelper(Node* current, Food foodItem);
+    Node* removeNode(Node* current);
 
 public:
     Tree(string nutrient) {
@@ -32,6 +33,7 @@ public:
     void insert(Food insertFood);
     void buildTreeHelper(string nutrientName, vector<Food> foods);
     void DFS(Node* current);
+    void postorderDeletion(Node* current);
 };
 
 
