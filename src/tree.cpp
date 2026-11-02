@@ -30,16 +30,6 @@ void Tree::buildTreeHelper(string nutrientName, vector<Food> foods) {
     }
 }
 
-//inorder traversal, printing on the go
-void Tree::DFS(Node* current) {
-    if (current == nullptr) {
-        return;
-    }
-    DFS(current->left);
-    cout << current->foodItem.getNutrientAmount() << endl;
-    DFS(current->right);
-}
-
 Node* Tree::removeNode(Node* current) {
     current->left = nullptr;
     current->right = nullptr;
@@ -54,4 +44,22 @@ void Tree::postorderDeletion(Node* current) {
     postorderDeletion(current->left);
     postorderDeletion(current->right);
     removeNode(current);
+}
+
+void Node::printNode() {
+    cout << "Food Type: " << foodItem.getCategory() << endl;
+    cout << "Food Name: " << foodItem.getDescription() << endl;
+    cout << "Nutrient Amount: " << foodItem.getNutrientAmount();
+    //need units for each nutrient amount in each food
+    cout << "of" << foodItem.getNutrientName() << endl;
+}
+
+//inorder traversal, printing on the go
+void Tree::DFS(Node* current) {
+    if (current == nullptr) {
+        return;
+    }
+    DFS(current->left);
+    current->printNode();
+    DFS(current->right);
 }

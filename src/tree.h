@@ -16,6 +16,7 @@ struct Node {
         this->left = nullptr;
         this->right = nullptr;
     }
+    void printNode();
 };
 
 class Tree {
