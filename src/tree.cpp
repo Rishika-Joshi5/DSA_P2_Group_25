@@ -55,11 +55,15 @@ void Node::printNode() {
 }
 
 //inorder traversal, printing on the go
-void Tree::DFS(Node* current) {
+void Tree::DFSHelper(Node* current) {
     if (current == nullptr) {
         return;
     }
-    DFS(current->left);
+    DFSHelper(current->left);
     current->printNode();
-    DFS(current->right);
+    DFSHelper(current->right);
+}
+
+void Tree::DFS() {
+    DFSHelper(root);
 }
