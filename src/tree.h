@@ -30,6 +30,13 @@ public:
         this->nutrient = nutrient;
         this->root = nullptr;
     }
+    ~Tree() {
+        postorderDeletion(root);
+        //might not be necessary, but just to be safe
+        root->left = nullptr;
+        root->right = nullptr;
+        delete root;
+    }
     void insert(Food insertFood);
     void buildTreeHelper(string nutrientName, vector<Food> foods);
     void DFS(Node* current);
