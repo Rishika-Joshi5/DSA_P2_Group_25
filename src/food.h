@@ -17,6 +17,7 @@ public:
     std::string getDescription();
     std::string getNutrientName();
     float getNutrientAmount();
+    std::string getNutrientUnits();
 };
 
 

@@ -13,7 +13,7 @@ Food::Food(string foodCat, string foodDesc, string foodNutrName, float foodNutrA
     description = foodDesc;
     nutrientName = foodNutrName;
     nutrientAmount = foodNutrAmt;
-    nutrientUnits == "g";
+    nutrientUnits == foodUnits;
 }
 
 string Food::getCategory() {
@@ -30,4 +30,8 @@ string Food::getNutrientName() {
 
 float Food::getNutrientAmount() {
     return nutrientAmount;
+}
+
+string Food::getNutrientUnits() {
+    return nutrientUnits;
 }

@@ -11,7 +11,8 @@ int main() {
     //cat: Milk, nutr: Protein, amt: 10
     vector<Food> testVec1 = readFile("Milk", "Protein", 10);
     for (Food curr : testVec1) {
-        cout << curr.getCategory() << " " << curr.getDescription() << " " << curr.getNutrientAmount() << endl;
+        cout << curr.getNutrientUnits() << endl;
+        cout << curr.getCategory() << " " << curr.getDescription() << " " << curr.getNutrientAmount() << curr.getNutrientUnits() << endl;
     }
 
 

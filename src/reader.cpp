@@ -86,8 +86,32 @@ std::vector<std::string> parseLine(const std::string& line) {
 
 //helper function to get units for nutrients
 //a bunch of if statements
-std::string findUnits(std::string nutrName) {
-    return "g";
+std::string findUnits(std::string& nutrName) {
+    //g
+    if ((nutrName == "Carbohydrate") || (nutrName == "Fiber") || (nutrName == "Protein") || (nutrName == "Sugar Total")
+        || (nutrName == "Water") || (nutrName == "Fat.Monosaturated Fat") || (nutrName == "Fat.Polysaturated Fat")
+        || (nutrName == "Fat.Saturated Fat") || (nutrName == "Fat.Total Lipid")) {
+        return "g";
+    }
+    //mcg
+    else if (nutrName == "Alpha Carotene" || nutrName == "Beta Carotene" || nutrName == "Beta Cryptoxanthin"
+        || nutrName == "Beta Cryptoxanthin" || nutrName == "Lutein and Zeaxanthin"
+        || nutrName == "Lycopene" || nutrName == "Retinol" || nutrName == "Selenium"
+        || nutrName == "Vitamins.Vitamin A - RAE" || nutrName == "Vitamins.Vitamin B12"
+        || nutrName == "Vitamins.Vitamin K") {
+        return "mcg";
+    }
+    //mg
+    else if (nutrName == "Cholesterol" || nutrName == "Choline" || nutrName == "Niacin"
+        || nutrName == "Riboflavin" || nutrName == "Thiamin" || nutrName == "Major Minerals.Calcium"
+        || nutrName == "Major Minerals.Copper" || nutrName == "Major Minerals.Iron"
+        || nutrName == "Major Minerals.Magnesium" || nutrName == "Major Minerals.Phosphorus"
+        || nutrName == "Major Minerals.Potassium" || nutrName == "Major Minerals.Sodium"
+        || nutrName == "Major Minerals.Zinc" || nutrName == "Vitamins.Vitamin B6"
+        || nutrName == "Vitamins.Vitamin C" || nutrName == "Vitamins.Vitamin E") {
+        return "mg";
+    }
+    return "units";
 }
 
 //function that reads the file and creates food objects based on whatever nutrient is chosen
@@ -95,8 +119,6 @@ std::string findUnits(std::string nutrName) {
 
 //should return at least one value, the root.
 //if returns an empty array, error has occured.
-
-//THIS IS FAR FROM DONE BTW
 std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmount) {
     std::string dataNutrName = "Data." + nutrName; //makes nutrName be Data.[nutrName] to compare later on.
     std::vector<Food> foods = {}; //what will be returned
