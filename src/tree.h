@@ -22,7 +22,7 @@ struct Node {
 class Tree {
     //may not need nutrient variable
     string nutrient;
-    Node* root;
+    Node* root = nullptr;
     Node* insertHelper(Node* current, Food foodItem);
     Node* removeNode(Node* current);
     void DFSHelper(Node* current);
@@ -30,7 +30,6 @@ class Tree {
 public:
     Tree(string nutrient) {
         this->nutrient = nutrient;
-        this->root = nullptr;
     }
     ~Tree() {
         postorderDeletion(root);
