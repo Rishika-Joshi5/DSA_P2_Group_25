@@ -51,7 +51,7 @@ void Node::printNode() {
     cout << "Food Name: " << foodItem.getDescription() << endl;
     cout << "Nutrient Amount: " << foodItem.getNutrientAmount();
     //need units for each nutrient amount in each food
-    cout << "of" << foodItem.getNutrientName() << endl;
+    cout << " units" << " of " << foodItem.getNutrientName() << endl;
 }
 
 //inorder traversal, printing on the go
