@@ -13,8 +13,8 @@ struct Node {
     //Node constructor now takes in a Food object
     Node(Food foodItem) {
         this->foodItem = foodItem;
-        this->left = nullptr;
-        this->right = nullptr;
+        left = nullptr;
+        right = nullptr;
     }
     void printNode();
 };
