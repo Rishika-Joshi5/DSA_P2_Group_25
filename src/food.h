@@ -8,10 +8,11 @@ class Food {
     std::string description;
     std::string nutrientName;
     float nutrientAmount;
+    std::string nutrientUnits;
 
 public:
     Food();
-    Food(std::string foodCat, std::string foodDesc, std::string foodNutrName, float foodNutrAmt);
+    Food(std::string foodCat, std::string foodDesc, std::string foodNutrName, float foodNutrAmt, std::string foodUnits);
     std::string getCategory();
     std::string getDescription();
     std::string getNutrientName();

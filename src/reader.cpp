@@ -84,6 +84,12 @@ std::vector<std::string> parseLine(const std::string& line) {
 }
 
 
+//helper function to get units for nutrients
+//a bunch of if statements
+std::string findUnits(std::string nutrName) {
+    return "g";
+}
+
 //function that reads the file and creates food objects based on whatever nutrient is chosen
 //also includes the food that will be at the root of the tree
 
@@ -108,6 +114,7 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
     }
 
     std::string line;
+    std::string nutrUnits = findUnits(nutrName);
 
     //read line with all the keys
     //get the index of category, description, and the nutrient type based on Data.[nutrName]
@@ -132,7 +139,7 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
     while (std::getline(foodFile, line)) {
         std::vector<std::string> currFoodStats = parseLine(line);
         if (currFoodStats[0] == foodCat) {
-            Food root(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]));
+            Food root(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]), nutrUnits);
             foods.push_back(root);
             break;
         }
@@ -149,7 +156,7 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
     while (std::getline(foodFile, line)) {
         //go line by line, getting stats for current food item
         std::vector<std::string> currFoodStats = parseLine(line);
-        Food currFood(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]));
+        Food currFood(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]), nutrUnits);
 
         //check if categories are the same. if is, move to next line
         for (int i=0; i<foods.size(); i++) {
