@@ -179,12 +179,18 @@ std::vector<Food> readFile(std::string foodCat, std::string nutrName, int altAmo
         //go line by line, getting stats for current food item
         std::vector<std::string> currFoodStats = parseLine(line);
         Food currFood(currFoodStats[0], currFoodStats[1], nutrName, std::stof(currFoodStats[nutrientIndex]), nutrUnits);
+        bool duplicate = false;
 
         //check if categories are the same. if is, move to next line
         for (int i=0; i<foods.size(); i++) {
             if (currFood.getCategory() == foods[i].getCategory()) {
-                continue;
+                duplicate = true;
+                break;
             }
+        }
+
+        if (duplicate) {
+            continue;
         }
 
         //adding to foods vector

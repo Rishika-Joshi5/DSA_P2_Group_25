@@ -6,14 +6,14 @@ Food::Food() {
     description = "placeholder food item";
     nutrientName = "placeholder nutrient";
     nutrientAmount = 0.0;
-    nutrientUnits == "g";
+    nutrientUnits = "g";
 }
 Food::Food(string foodCat, string foodDesc, string foodNutrName, float foodNutrAmt, string foodUnits) {
     category = foodCat;
     description = foodDesc;
     nutrientName = foodNutrName;
     nutrientAmount = foodNutrAmt;
-    nutrientUnits == foodUnits;
+    nutrientUnits = foodUnits;
 }
 
 string Food::getCategory() {
