@@ -1,6 +1,7 @@
 #include "tree.h"
 #include <string>
 #include <iostream>
+#include <queue>
 using namespace std;
 
 void Tree::insert(Food insertFood) {
@@ -67,3 +68,24 @@ void Tree::DFSHelper(Node* current) {
 void Tree::DFS() {
     DFSHelper(root);
 }
+
+//breadth first traversal, printing on the go
+void Tree::BSF(Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    queue<Node*> foods;
+    foods.push(root);
+    while (!foods.empty()) {
+        Node* current = foods.front();
+        foods.pop();
+        current->printNode();
+        if (current->left != nullptr) {
+            foods.push(current->left);
+        }
+        if (current->right != nullptr) {
+            foods.push(current->right);
+        }
+    }
+}
+

@@ -42,6 +42,7 @@ public:
     void buildTreeHelper(string nutrientName, vector<Food> foods);
     void postorderDeletion(Node* current);
     void DFS();
+    void BSF(Node* root);
 };
 
 
