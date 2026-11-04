@@ -37,7 +37,7 @@ public:
     void insert(Food insertFood);
     void postorderDeletion(Node* current);
     void DFS();
-    void BSF();
+    void BFS();
 };
 
 

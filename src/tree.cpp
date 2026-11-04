@@ -56,7 +56,7 @@ void Tree::DFS() {
 }
 
 //breadth first traversal, printing on the go
-void Tree::BSF() {
+void Tree::BFS() {
     if (this->root == nullptr) {
         return;
     }
