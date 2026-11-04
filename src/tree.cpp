@@ -13,6 +13,9 @@ Node* Tree::insertHelper(Node* current, Food insertFood) {
     if (current == nullptr) {
         return new Node (insertFood);
     }
+    if (insertFood.getNutrientAmount() == 0) {
+        return current;
+    }
     if (insertFood.getNutrientAmount() < current->foodItem.getNutrientAmount()) {
         current->left = insertHelper(current->left, insertFood);
     }
