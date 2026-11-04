@@ -22,20 +22,7 @@ Node* Tree::insertHelper(Node* current, Food insertFood) {
     else {
         cout << "could not insert node into tree" << endl;
     }
-}
-
-void Tree::buildTreeHelper(string nutrientName, vector<Food> foods) {
-    //may not need to take in nutrientName
-    for (Food f : foods) {
-        insert(f);
-    }
-}
-
-Node* Tree::removeNode(Node* current) {
-    current->left = nullptr;
-    current->right = nullptr;
-    delete current;
-    current = nullptr;
+    return current;
 }
 
 void Tree::postorderDeletion(Node* current) {
@@ -44,15 +31,14 @@ void Tree::postorderDeletion(Node* current) {
     }
     postorderDeletion(current->left);
     postorderDeletion(current->right);
-    removeNode(current);
+    delete current;
 }
 
 void Node::printNode() {
     cout << "Food Type: " << foodItem.getCategory() << endl;
     cout << "Food Name: " << foodItem.getDescription() << endl;
-    cout << "Nutrient Amount: " << foodItem.getNutrientAmount();
-    //need units for each nutrient amount in each food
-    cout << " units" << " of " << foodItem.getNutrientName() << endl;
+    cout << foodItem.getNutrientAmount() << foodItem.getNutrientUnits() << " of " << foodItem.getNutrientName() << endl;
+    cout << endl;
 }
 
 //inorder traversal, printing on the go
@@ -70,12 +56,12 @@ void Tree::DFS() {
 }
 
 //breadth first traversal, printing on the go
-void Tree::BSF(Node* root) {
-    if (root == nullptr) {
+void Tree::BSF() {
+    if (this->root == nullptr) {
         return;
     }
     queue<Node*> foods;
-    foods.push(root);
+    foods.push(this->root);
     while (!foods.empty()) {
         Node* current = foods.front();
         foods.pop();

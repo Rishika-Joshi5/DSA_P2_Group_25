@@ -24,7 +24,6 @@ class Tree {
     string nutrient;
     Node* root = nullptr;
     Node* insertHelper(Node* current, Food foodItem);
-    Node* removeNode(Node* current);
     void DFSHelper(Node* current);
 
 public:
@@ -33,16 +32,12 @@ public:
     }
     ~Tree() {
         postorderDeletion(root);
-        //might not be necessary, but just to be safe
-        root->left = nullptr;
-        root->right = nullptr;
-        delete root;
+        root = nullptr;
     }
     void insert(Food insertFood);
-    void buildTreeHelper(string nutrientName, vector<Food> foods);
     void postorderDeletion(Node* current);
     void DFS();
-    void BSF(Node* root);
+    void BSF();
 };
 
 
