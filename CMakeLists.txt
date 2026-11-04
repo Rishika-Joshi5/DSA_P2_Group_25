@@ -12,4 +12,5 @@ add_executable(DSA_P2_Group_25
         src/food.h
         src/food.cpp
         src/reader.h
-        src/reader.cpp)
+        src/reader.cpp
+)
