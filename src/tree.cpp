@@ -19,6 +19,10 @@ Node* Tree::insertHelper(Node* current, Food insertFood) {
     else if (insertFood.getNutrientAmount() > current->foodItem.getNutrientAmount()) {
         current->right = insertHelper(current->right, insertFood);
     }
+    //putting equal values on the left (doesn't really matter which side)
+    else if (insertFood.getNutrientAmount() == current->foodItem.getNutrientAmount()) {
+        current->left = insertHelper(current->left, insertFood);
+    }
     else {
         cout << "could not insert node into tree" << endl;
     }
