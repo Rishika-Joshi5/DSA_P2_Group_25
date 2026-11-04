@@ -85,7 +85,6 @@ std::vector<std::string> parseLine(const std::string& line) {
 
 
 //helper function to get units for nutrients
-//a bunch of if statements
 std::string findUnits(std::string& nutrName) {
     //g
     if ((nutrName == "Carbohydrate") || (nutrName == "Fiber") || (nutrName == "Protein") || (nutrName == "Sugar Total")
