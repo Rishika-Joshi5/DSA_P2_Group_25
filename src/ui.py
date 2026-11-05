@@ -56,4 +56,27 @@ def draw_button(rect, text, enabled = True):
     pygame.draw.rect(screen, color, rect, border_radius = 8)
     draw_text(text, font, white, rect.centerx, rect.centery, center = True)
 
+#reads food.csv to get every food category and every nutrient name
+def load_options():
+    foods = []
+    nutrients = []
+    file = open(csvPath, encoding = "utf-8", errors = "replace")
+
+    #first line has the column names
+    headers = file.readline().strip().split('","')
+    for header in headers:
+        header = header.strip().strip('"')
+        if header.startswith("Data."):
+            nutrients.append(header[5:])   #remove "Data."
+
+    #the food category is the first column of every other line
+    for line in file:
+        category = line.split('","')[0].strip().strip('"')
+        if category != "" and category not in foods:
+            foods.append(category)
+
+    file.close()
+    foods.sort()
+    return foods, nutrients
+
 
