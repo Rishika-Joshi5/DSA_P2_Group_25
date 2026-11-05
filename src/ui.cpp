@@ -1,8 +1,9 @@
 #include "reader.h"
 #include "tree.h"
 #include <iostream>
+#include <chrono>
 using namespace std;
-//prints as text so ui.py and read
+//prints as text so ui.py can read it
 
 int main(int argc, char* argv[]){
     //checks to make sure there are no missing arguments
@@ -31,8 +32,23 @@ int main(int argc, char* argv[]){
         tree.insert(foods[i]);
     }
 
+    //time DFS (ui.py uses this)
     cout << "START" << endl;
+    auto dfsStart = chrono::steady_clock::now();
     tree.DFS();
+    auto dfsEnd = chrono::steady_clock::now();
+
+    //time BFS (ui.py skips this)
+    cout << "BFS_START" << endl;
+    auto bfsStart = chrono::steady_clock::now();
+    tree.BFS();
+    auto bfsEnd = chrono::steady_clock::now();
+
+    //times in milliseconds
+    double dfsMs = chrono::duration<double, milli>(dfsEnd - dfsStart).count();
+    double bfsMs = chrono::duration<double, milli>(bfsEnd - bfsStart).count();
+    cout << "TIME|DFS|" << dfsMs << endl;
+    cout << "TIME|BFS|" << bfsMs << endl;
 
     return 0;
 }

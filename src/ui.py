@@ -87,6 +87,7 @@ def load_options():
 def read_output(text):
     original = None
     results = []
+    times = {}
     started = False
     category = ""
     name = ""
@@ -100,6 +101,11 @@ def read_output(text):
                         "amount": float(parts[3]), "units": parts[4]}
         elif line == "START":
             started = True
+        elif line == "BFS_START":
+            started = False
+        elif line.startswith("TIME|"):
+            parts = line.split("|")
+            times[parts[1]] = float(parts[2])
         elif started and line.startswith("Food Type: "):
             category = line[len("Food Type: "):]
         elif started and line.startswith("Food Name: "):
@@ -110,7 +116,7 @@ def read_output(text):
             results.append({"category": category, "name": name, "amount": float(amountText)})
 
     if original is None:
-        return None, []
+        return None, [], {}
 
     for i in range(len(results)):
         if results[i]["name"] == original["name"]:
@@ -120,7 +126,7 @@ def read_output(text):
     for food in results:
         food["match"] = match_percent(original["amount"], food["amount"])
     results.sort(key = lambda food: food["match"], reverse=True)
-    return original, results
+    return original, results, times
 def match_percent(a, b):
     if a == b:
         return 100.0
@@ -257,6 +263,7 @@ process = None
 searchStart = 0
 original = None
 results = []
+times = {}
 nutrientLabel = ""
 
 def restart():
@@ -288,13 +295,13 @@ def start_search():
     searchStart = pygame.time.get_ticks()
 
 def check_search():
-    global state, message, original, results
+    global state, message, original, results, times
     waited = pygame.time.get_ticks() - searchStart
     #wait at least 1.2 seconds for "Searching..."
     if process.poll() is None or waited < 1200:
         return
     output, errors = process.communicate()
-    original, results = read_output(output)
+    original, results, times = read_output(output)
     if original is None:
         state = "choose"
         message = "The search did not work: " + (output + errors).strip()
@@ -347,6 +354,9 @@ def draw_results():
     #the most similar foods
     y = box.bottom + 15
     draw_text("Most similar foods", font, textColor, panel.x + 20, y)
+    if "DFS" in times and "BFS" in times:
+        timeText = f"DFS: {times['DFS']:.4f} ms    BFS: {times['BFS']:.4f} ms"
+        draw_text(timeText, smallFont, selected_buttons, panel.right - 20 - smallFont.size(timeText)[0], y + 2)
     y += 32
     if len(results) == 0:
         draw_text("No other foods with this nutrient were found.", font, gray, panel.x + 20, y)
