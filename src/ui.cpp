@@ -18,7 +18,7 @@ int main(int argc, char*, argv[]){
     vector<Food> foods = readFile(category, nutrient, count);
 
     if (foods.empty()){
-        count << "readFile returns no foods" << endl;
+        cout << "readFile returns no foods" << endl;
         return 1;
     }
 
@@ -30,4 +30,9 @@ int main(int argc, char*, argv[]){
     for (int i = 0; i < foods.size(); i++) {
         tree.insert(foods[i]);
     }
+
+    cout << "START" << endl;
+    tree.DFS();
+
+    return 0;
 }
