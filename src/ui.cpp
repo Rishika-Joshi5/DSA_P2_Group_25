@@ -18,7 +18,16 @@ int main(int argc, char*, argv[]){
     vector<Food> foods = readFile(category, nutrient, count);
 
     if (foods.empty()){
-        count << "readFile returns no foods" <, endl;
+        count << "readFile returns no foods" << endl;
         return 1;
+    }
+
+    //food[0] is the food the user picks
+    cout<<"ROOT|" << foods[0].getCategory() << "|" << foods[0].getDescription() << "|"
+        << foods[0].getNutrientAmount() << "|" << foods[0].getNutrientUnits() << endl;
+
+    Tree tree(nutrient);
+    for (int i = 0; i < foods.size(); i++) {
+        tree.insert(foods[i]);
     }
 }
