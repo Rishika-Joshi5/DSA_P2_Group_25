@@ -79,4 +79,48 @@ def load_options():
     foods.sort()
     return foods, nutrients
 
+#turns what ui.exe printed into the original food and a list of results
+def read_output(text):
+    original = None
+    results = []
+    started = False
+    category = ""
+    name = ""
 
+    for line in text.splitlines():
+        line = line.strip()
+        if line.startswith("ROOT|"):
+            #display - ROOT|category|name|amount|units
+            parts = line.split("|")
+            original = {"category": parts[1], "name": parts[2],
+                        "amount": float(parts[3]), "units": parts[4]}
+        elif line == "START":
+            started = True
+        elif started and line.startswith("Food Type: "):
+            category = line[len("Food Type: "):]
+        elif started and line.startswith("Food Name: "):
+            name = line[len("Food Name: "):]
+        elif started and " of " in line and original is not None:
+            amountText = line.split(" of ")[0]
+            amountText = amountText[:len(amountText) - len(original["units"])]
+            results.append({"category": category, "name": name, "amount": float(amountText)})
+
+    if original is None:
+        return None, []
+
+    for i in range(len(results)):
+        if results[i]["name"] == original["name"]:
+            results.pop(i)
+            break
+
+    for food in results:
+        food["match"] = match_percent(original["amount"], food["amount"])
+    results.sort(key = lambda food: food["match"], reverse=True)
+    return original, results
+def match_percent(a, b):
+    if a == b:
+        return 100.0
+    return 100.0 * min(a, b) / max(a, b)
+
+def simplify_num(number):
+    return f"{number:g}"
