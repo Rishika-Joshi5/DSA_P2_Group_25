@@ -4,7 +4,7 @@
 using namespace std;
 //prints as text so ui.py and read
 
-int main(int argc, char*, argv[]){
+int main(int argc, char* argv[]){
     //checks to make sure there are no missing arguments
     if (argc < 4) {
         cout << "usage: ui <category> <nutrient> <count>" << endl;
