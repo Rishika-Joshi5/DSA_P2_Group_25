@@ -5,8 +5,20 @@ using namespace std;
 //prints as text so ui.py and read
 
 int main(int argc, char*, argv[]){
+    //checks to make sure there are no missing arguments
     if (argc < 4) {
         cout << "usage: ui <category> <nutrient> <count>" << endl;
+        return 1;
+    }
+
+    string category = argv[1];
+    string nutrient = argv[2];
+    int count = stoi(argv[3]);
+
+    vector<Food> foods = readFile(category, nutrient, count);
+
+    if (foods.empty()){
+        count << "readFile returns no foods" <, endl;
         return 1;
     }
 }
